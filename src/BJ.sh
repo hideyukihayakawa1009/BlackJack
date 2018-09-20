@@ -22,7 +22,6 @@ done
 ###########################
 # カードのシャッフル
 shuffle
-
 # 1枚目のカード
 card1=${array[0]};
 # 2枚目のカード
@@ -36,15 +35,17 @@ if [ ww == 0 ] ; then
 echo 'プレイヤーは先攻';
 else
 echo 'プレイヤーは後攻';
+fi
 ############先攻#############
 echo 'Player : '$sum1
 echo 'CPU : ?'
-
 #終わる条件
 j=0;
 
-while true
-do
+flag0=0
+flagg=0
+flaggg=0
+
 ###互いパス###
 flag1=0;
 flag2=1;
@@ -53,15 +54,18 @@ flag3=0;
 flag4=1;
 ##############
 
+while true
+do
+
 j=$((++j));
 
-card1=${array[j*2]};
-card2=${array[j*2+1]};
-if [ card2 == 13 ] ; then
+card1=${array[$((j * 2))]};
+card2=${array[$((j*2+1))]};
+if [ $j = 13 ]; then
 break;
 fi
 read -p $j'枚目をひきますか？(y/n) : ' n
-if [ $n = 'y'] ; then
+if [ $n = 'y' ] ; then
 sum1=$((sum1 + card1));
 echo 'Player : '$card1' 合計 : '$sum1
 if [ 21 -lt $sum1 ] ; then
@@ -70,12 +74,16 @@ flag3=2;
 break;
 fi
 else
-echo 'Player : '合計 : '$sum1'
+echo 'Player : '$card1'合計 :' $sum1
 flag1=2;
 fi
+if [ $n = n ]; then
+flaggg=1
+fi
 
-if [ sum2 -lt 15 ] ; then
+if [ $sum2 -lt 15 ] ; then
 sum2=$((sum2 + card2));
+flag0=1
 echo 'CPU : '$card2' 合計 : '$sum2
 if [ 21 -lt $sum2 ] ; then
 echo 'CPU OVER'
@@ -83,11 +91,20 @@ flag4=2;
 break;
 fi
 else
+if [ $flag0 = 0 ]; then
 echo 'CPUは引きませんでした。'
-echo 'CPU : '合計 : '$sum2 '
+else
+flagg=1
+fi
+echo 'CPU : '$card2'合計 : '$sum2 
 flag2=2;
 fi
+if [ $flagg = 1 ] && [ $flaggg = 1 ]; then
+break;
+fi
+done
 
+if [ $j = 13 ] || [ $flagg = 1 ] && [ $flaggg = 1 ]; then 
 ################お互いパス#############
 if [ $flag1 == $flag2 ] ; then
 echo '結果'
@@ -95,25 +112,24 @@ echo 'プレイヤー : '$sum1
 echo 'CPU : '$sum2
 if [ $sum1 -lt $sum2 ] ; then
 echo 'CPU WIN'
-break;
 else
 echo 'プレイヤー WIN'
-break;
 fi
+fi
+exit
 fi
 ##############21超えた##############
 if [ $flag3 == $flag4 ] ; then
 echo '結果'
 echo '引き分け'
-break;
-elif [ flag3 == 2 ] ; then
+elif [ $flag3 == 2 ] ; then
 echo '結果'
 echo 'CPU WIN'
-break;
 else
 echo '結果'
 echo 'プレイヤー WIN'
-break;
 fi
 ####################################
-done
+
+
+

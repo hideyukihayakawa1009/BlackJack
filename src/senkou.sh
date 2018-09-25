@@ -1,5 +1,5 @@
 #!/bin/bash
-echo 'aaa'
+
 array=();
 for((i=0; i < 12; i++));
 do
@@ -29,6 +29,11 @@ card2=${array[1]};
 
 sum1=$((card1));
 sum2=$((card2));
+g=0;
+if [ $g = 0 ] ; then
+cpu1=$sum2;
+g=$((++g));
+fi
 ############先攻#############
 echo 'Player : '$sum1
 echo 'CPU : ?'
@@ -74,15 +79,10 @@ if [ $n = n ]; then
 flaggg=1
 fi
 
-www=$((random % 2))
-if [ $sum2 -lt 15 ]; then
+if [ $sum2 -lt 15 ] ; then
 sum2=$((sum2 + card2));
 flag0=1
-echo 'CPU : '$card2' 合計 : '$sum2
-elif [ $sum2 -gt 15 ] && [ $sum2 -lt 21 ] && [ $www = 0 ];then
-sum2=$((sum2 + card2));
-flag0=1
-fi
+echo 'CPU : '$card2' 合計 : '$((sum2 - cpu1))' + ?'
 if [ 21 -lt $sum2 ] ; then
 echo 'CPU OVER'
 flag4=2;
@@ -94,8 +94,9 @@ echo 'CPUは引きませんでした。'
 else
 flagg=1
 fi
-echo 'CPU : '$card2'合計 : '$sum2 
+echo 'CPU : '$card2'合計 : '$((sum2 - cpu1))' + ? ' 
 flag2=2;
+fi
 if [ $flagg = 1 ] && [ $flaggg = 1 ]; then
 break;
 fi
@@ -118,12 +119,18 @@ fi
 ##############21超えた##############
 if [ $flag3 == $flag4 ] ; then
 echo '結果'
+echo 'プレイヤー : '$sum1
+echo 'CPU : '$sum2
 echo '引き分け'
 elif [ $flag3 == 2 ] ; then
 echo '結果'
+echo 'プレイヤー : '$sum1
+echo 'CPU : '$sum2
 echo 'CPU WIN'
 else
 echo '結果'
+echo 'プレイヤー : '$sum1
+echo 'CPU : '$sum2
 echo 'プレイヤー WIN'
 fi
 ####################################

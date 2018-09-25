@@ -1,6 +1,5 @@
-#!/bin/bash
-echo "戦闘";
 
+#!bin/bash/
 array=();
 for((i=0; i < 12; i++));
 do
@@ -30,14 +29,16 @@ card2=${array[1]};
 
 sum1=$((card1));
 sum2=$((card2));
-g=0;
-if [ $g = 0 ] ; then
-cpu1=$sum2;
-g=$((++g));
+###########################
+ww=$((RANDOM % 2));
+if [ ww == 0 ] ; then
+echo 'プレイヤーは先攻';
+else
+echo 'プレイヤーは後攻';
 fi
-############後攻#############
+############先攻#############
+echo 'Player : '$sum1
 echo 'CPU : ?'
-echo 'Player : '$sum2
 #終わる条件
 j=0;
 
@@ -52,6 +53,7 @@ flag2=1;
 flag3=0;
 flag4=1;
 ##############
+
 while true
 do
 
@@ -62,11 +64,27 @@ card2=${array[$((j*2+1))]};
 if [ $j = 13 ]; then
 break;
 fi
+read -p $j'枚目をひきますか？(y/n) : ' n
+if [ $n = 'y' ] ; then
+sum1=$((sum1 + card1));
+echo 'Player : '$card1' 合計 : '$sum1
+if [ 21 -lt $sum1 ] ; then
+echo 'プレイヤー OVER'
+flag3=2;
+break;
+fi
+else
+echo 'Player : '$card1'合計 :' $sum1
+flag1=2;
+fi
+if [ $n = n ]; then
+flaggg=1
+fi
 
 if [ $sum2 -lt 15 ] ; then
 sum2=$((sum2 + card2));
 flag0=1
-echo 'CPU : '$card2' 合計 : '$((sum2 - cpu1))' + ?'
+echo 'CPU : '$card2' 合計 : '$sum2
 if [ 21 -lt $sum2 ] ; then
 echo 'CPU OVER'
 flag4=2;
@@ -78,30 +96,12 @@ echo 'CPUは引きませんでした。'
 else
 flagg=1
 fi
-echo 'CPU : '$card2'合計 : '$((sum2 - cpu1))' + ?'
+echo 'CPU : '$card2'合計 : '$sum2 
 flag2=2;
 fi
-
-read -p $j'枚目をひきますか？(y/n) : ' n
-if [ $n = 'y' ] ; then
-sum1=$((sum1 + card1));
-echo 'Player : '$card1' 合計 : '$sum1
-if [ 21 -lt $sum1 ] ; then
-echo 'プレイヤー OVER'
-flag3=2;
-break;
-fi
-else
-echo 'Player : '$card1' 合計 :' $sum1
-flag1=2;
-fi
-if [ $n = n ]; then
-flaggg=1
-fi
-
 if [ $flagg = 1 ] && [ $flaggg = 1 ]; then
 break;
-fi 
+fi
 done
 
 if [ $j = 13 ] || [ $flagg = 1 ] && [ $flaggg = 1 ]; then 
@@ -121,18 +121,12 @@ fi
 ##############21超えた##############
 if [ $flag3 == $flag4 ] ; then
 echo '結果'
-echo 'プレイヤー : '$sum1
-echo 'CPU : '$sum2
 echo '引き分け'
 elif [ $flag3 == 2 ] ; then
 echo '結果'
-echo 'プレイヤー : '$sum1
-echo 'CPU : '$sum2
 echo 'CPU WIN'
 else
 echo '結果'
-echo 'プレイヤー : '$sum1
-echo 'CPU : '$sum2
 echo 'プレイヤー WIN'
 fi
 ####################################

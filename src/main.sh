@@ -1,3 +1,4 @@
+#!/bin/bash
 
 senkou=0
 koukou=0

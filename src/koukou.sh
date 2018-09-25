@@ -1,4 +1,4 @@
-
+#!/bin/bash
 echo "戦闘";
 
 array=();

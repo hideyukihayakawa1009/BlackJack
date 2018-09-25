@@ -1,4 +1,4 @@
-
+#!/bin/bash
 echo 'aaa'
 array=();
 for((i=0; i < 12; i++));

@@ -74,10 +74,15 @@ if [ $n = n ]; then
 flaggg=1
 fi
 
-if [ $sum2 -lt 15 ] ; then
+www=$((random % 2))
+if [ $sum2 -lt 15 ]; then
 sum2=$((sum2 + card2));
 flag0=1
 echo 'CPU : '$card2' 合計 : '$sum2
+elif [ $sum2 -gt 15 ] && [ $sum2 -lt 21 ] && [ $www = 0 ];then
+sum2=$((sum2 + card2));
+flag0=1
+fi
 if [ 21 -lt $sum2 ] ; then
 echo 'CPU OVER'
 flag4=2;
@@ -91,7 +96,6 @@ flagg=1
 fi
 echo 'CPU : '$card2'合計 : '$sum2 
 flag2=2;
-fi
 if [ $flagg = 1 ] && [ $flaggg = 1 ]; then
 break;
 fi
